@@ -15,7 +15,7 @@ This is an exercice made with NodeJS and JavaScript
 - unmarkTaskDone(); allow to set a task as unDone
 - askForAction(); this function is the main sequence where you do your command
 
-## Bug and fixes coming
+## function and fixes coming
 
 - a function that allow to edit a task identified by his id
 - editing a function delete task, will be possible to delete his task with id instead of an index
