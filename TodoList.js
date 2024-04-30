@@ -75,7 +75,6 @@ function unmarkTaskDone(index) {
   }
 }
 
-
 //fonction principal qui servira à demander les actions de l'utilisateur
 function askForAction() {
   rl.question('Que souhaitez-vous faire ? (add/list/delete/mark/unmark/exit): ', (action) => { // Au lancement du script ce sera toujours cette question
