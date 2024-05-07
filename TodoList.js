@@ -37,16 +37,20 @@ function addTask(title) {
 
 //fonction qui permet de lister les taches existantes
 function listTasks() { // pour chaque "taches" dans le fichier json
+  if(tasks.length === 0){
+    console.log('Liste des tâches vide!');
+  }else{
   console.log('Liste des tâches :');
   tasks.forEach(task => {
     console.log(`${task.id}. [${task.isDone ? 'X' : ' '}] ${task.title}`);// il ecris le numéro de la taches, puis si elle est coché ou non
   });                                                                     // puis affiche le nom de la taches
-}
+}}
 
 //fonction qui permet de supprimer une tache
-function deleteTask(index) {
-  if (index >= 0 && index < tasks.length) {// si l'index selectionné est entre ou = a 0 et plus petit que la taile max de l'array tasks
-    const deletedTask = tasks.splice(index, 1)[0];// supprime la tache ciblé par l'utilisateur ( le splice permet de suprrimer une valeur d'un array)
+function deleteTask(taskId) {
+  const taskIndex = tasks.findIndex(task => task.id === taskId);
+  if (taskIndex !== -1) {// si l'index selectionné est entre ou = a 0 et plus petit que la taile max de l'array tasks
+    const deletedTask = tasks.splice(taskIndex, 1)[0];// supprime la tache ciblé par l'utilisateur ( le splice permet de suprrimer une valeur d'un array)
     saveTasks();
     console.log('Tâche supprimée :', deletedTask.title);// confirmation et affiche le nom de la tache supprimé 
   } else {
@@ -54,22 +58,36 @@ function deleteTask(index) {
   }
 }
 
-// fonction qui permet de marquer les taches selectionné (fini ou non)
-function markTaskDone(index) {
-  if (index >= 0 && index < tasks.length) {// si l'index selectionné est entre ou = a 0 et plus petit que la taile max de l'array tasks
-    tasks[index].isDone = true;//mddifie la valeur isDone = true
+// Fonction pour modifier une tâche existante
+function editTask(taskId, newTitle) {
+    const taskIndex = tasks.findIndex(task => task.id === taskIndex);
+    if (taskIndex !== -1) {
+    tasks[taskIndex].title = newTitle; // Met à jour le titre de la tâche
     saveTasks();
-    console.log('Tâche marquée comme terminée :', tasks[index].title);// confirme la saisie
+    console.log(`Tâche ${taskIndex} modifiée :`, newTitle);
+    }
+
+    askForAction();// on retourne a la fonction principal
+}
+
+// fonction qui permet de marquer les taches selectionné (fini ou non)
+function markTaskDone(taskId) {
+  const taskIndex = tasks.findIndex(task => task.id === taskId);
+  if (taskIndex !== -1) {// si l'index selectionné est entre ou = a 0 et plus petit que la taile max de l'array tasks
+    tasks[taskIndex].isDone = true;//mddifie la valeur isDone = true
+    saveTasks();
+    console.log('Tâche marquée comme terminée :', tasks[taskIndex].title);// confirme la saisie
   } else {
     console.log('Indice de tâche invalide');
   }
 }
 //fonction qui permet d'enlever le marquage des taches terminée
-function unmarkTaskDone(index) {
-  if (index >= 0 && index < tasks.length) {// si l'index selectionné est entre ou = a 0 et plus petit que la taile max de l'array tasks
-    tasks[index].isDone = false;//mddifie la valeur isDone = false
+function unmarkTaskDone(taskId) {
+  const taskIndex = tasks.findIndex(task => task.id === taskId);
+  if (taskIndex !== -1) {// si l'index selectionné est entre ou = a 0 et plus petit que la taile max de l'array tasks
+    tasks[taskIndex].isDone = false;//mddifie la valeur isDone = false
     saveTasks();// sauvegarde la saisie
-    console.log('Tâche marquée comme non terminée :', tasks[index].title);// confirme la saisie
+    console.log('Tâche marquée comme non terminée :', tasks[taskIndex].title);// confirme la saisie
   } else {
     console.log('Indice de tâche invalide');
   }
@@ -77,7 +95,7 @@ function unmarkTaskDone(index) {
 
 //fonction principal qui servira à demander les actions de l'utilisateur
 function askForAction() {
-  rl.question('Que souhaitez-vous faire ? (add/list/delete/mark/unmark/exit): ', (action) => { // Au lancement du script ce sera toujours cette question
+  rl.question('Que souhaitez-vous faire ? (add/list/delete/mark/unmark/edit/exit): ', (action) => { // Au lancement du script ce sera toujours cette question
     switch (action) {// en fonction de la réponse de l'utilisateur
       case 'add':// si il veut ajouter alors
         rl.question('Entrez la nouvelle tâche : ', (title) => {// ajouter la nouvelle taches en utilisant la fonction addtask avec le contenu
@@ -90,23 +108,30 @@ function askForAction() {
         askForAction();// on retourne a la fonction principal
         break;
       case 'delete':
-        rl.question('Entrez le numéro de la tâche à supprimer : ', (index) => {// suprime la taches ciblé en utilisant la fonction deleteTask avec l'index
-          deleteTask(parseInt(index) - 1);//le - 1 permet d'eviter la selection de la mauvaise taches  ( un array commence par de 0 )
+        rl.question('Entrez le numéro de la tâche à supprimer : ', (taskId) => {// suprime la taches ciblé en utilisant la fonction deleteTask avec l'index
+          deleteTask(parseInt(taskId));
           askForAction();// on retourne a la fonction principal
         });
         break;
       case 'mark':// si il veut cocher une tache (isDone)
-        rl.question('Entrez le numéro de la tâche à marquer comme terminée : ', (index) => {
-          markTaskDone(parseInt(index) - 1);//le - 1 permet d'eviter la selection de la mauvaise taches  ( un array commence par de 0 )
+        rl.question('Entrez le numéro de la tâche à marquer comme terminée : ', (taskId) => {
+          markTaskDone(parseInt(taskId));
           askForAction();// on retourne a la fonction principal
         });
         break;
       case 'unmark':// si il veut décocher une tache (isDone)
-        rl.question('Entrez le numéro de la tâche à marquer comme non terminée : ', (index) => {
-          unmarkTaskDone(parseInt(index) - 1);//le - 1 permet d'eviter la selection de la mauvaise taches  ( un array commence par de 0 )
+        rl.question('Entrez le numéro de la tâche à marquer comme non terminée : ', (taskId) => {
+          unmarkTaskDone(parseInt(taskId));
           askForAction();// on retourne a la fonction principal
         });
         break;
+      case 'edit'://ferme la todolist
+      rl.question('Entrez le numéro de la tâche à modifier : ', (taskId) => {
+          rl.question('Entrez le nouveau titre pour la tâche : ', (newTitle) => {
+            editTask(parseInt(taskId), newTitle);
+          });
+      });
+      break;
       case 'exit'://ferme la todolist
         rl.close();
         break;
