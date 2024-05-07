@@ -48,8 +48,8 @@ function listTasks() { // pour chaque "taches" dans le fichier json
 
 //fonction qui permet de supprimer une tache
 function deleteTask(taskId) {
-  const taskIndex = tasks.findIndex(task => task.id === taskId);
-  if (taskIndex !== -1) {// si l'index selectionné est entre ou = a 0 et plus petit que la taile max de l'array tasks
+  const taskIndex = tasks.findIndex(task => task.id === taskId);// Renvoie l'index du premier élément du tableau  dans le cas présent on récupe l'id dans le json.
+  if (taskIndex !== -1) {// si il y a présence d'un id
     const deletedTask = tasks.splice(taskIndex, 1)[0];// supprime la tache ciblé par l'utilisateur ( le splice permet de suprrimer une valeur d'un array)
     saveTasks();
     console.log('Tâche supprimée :', deletedTask.title);// confirmation et affiche le nom de la tache supprimé 
@@ -60,8 +60,8 @@ function deleteTask(taskId) {
 
 // Fonction pour modifier une tâche existante
 function editTask(taskId, newTitle) {
-    const taskIndex = tasks.findIndex(task => task.id === taskIndex);
-    if (taskIndex !== -1) {
+    const taskIndex = tasks.findIndex(task => task.id === taskIndex); // Renvoie l'index du premier élément du tableau  dans le cas présent on récupe l'id dans le json.
+    if (taskIndex !== -1) { // si il y a présence d'un id
     tasks[taskIndex].title = newTitle; // Met à jour le titre de la tâche
     saveTasks();
     console.log(`Tâche ${taskIndex} modifiée :`, newTitle);
@@ -72,8 +72,8 @@ function editTask(taskId, newTitle) {
 
 // fonction qui permet de marquer les taches selectionné (fini ou non)
 function markTaskDone(taskId) {
-  const taskIndex = tasks.findIndex(task => task.id === taskId);
-  if (taskIndex !== -1) {// si l'index selectionné est entre ou = a 0 et plus petit que la taile max de l'array tasks
+  const taskIndex = tasks.findIndex(task => task.id === taskId);// Renvoie l'index du premier élément du tableau  dans le cas présent on récupe l'id dans le json.
+  if (taskIndex !== -1) {// si il y a présence d'un id
     tasks[taskIndex].isDone = true;//mddifie la valeur isDone = true
     saveTasks();
     console.log('Tâche marquée comme terminée :', tasks[taskIndex].title);// confirme la saisie
@@ -83,8 +83,8 @@ function markTaskDone(taskId) {
 }
 //fonction qui permet d'enlever le marquage des taches terminée
 function unmarkTaskDone(taskId) {
-  const taskIndex = tasks.findIndex(task => task.id === taskId);
-  if (taskIndex !== -1) {// si l'index selectionné est entre ou = a 0 et plus petit que la taile max de l'array tasks
+  const taskIndex = tasks.findIndex(task => task.id === taskId);// Renvoie l'index du premier élément du tableau  dans le cas présent on récupe l'id dans le json.
+  if (taskIndex !== -1) {// si il y a présence d'un id
     tasks[taskIndex].isDone = false;//mddifie la valeur isDone = false
     saveTasks();// sauvegarde la saisie
     console.log('Tâche marquée comme non terminée :', tasks[taskIndex].title);// confirme la saisie
