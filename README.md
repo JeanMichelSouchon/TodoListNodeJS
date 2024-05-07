@@ -10,15 +10,15 @@ This is an exercice made with NodeJS and JavaScript
 - saveTasks(); allow to save the added tasks in the json file
 - addTask(); allow to add a task
 - listTasks(); allow to list all the tasks
-- deleteTask(); allow to delete one task of your choice
-- markTaskDone(); allow to set a task as Done
-- unmarkTaskDone(); allow to set a task as unDone
+- deleteTask(); allow to delete one task selected by his id
+- markTaskDone(); allow to set a task as Done selected by his id
+- unmarkTaskDone(); allow to set a task as unDone selected by his id
+- deleteTask(); allow to edit one task selected by his id
 - askForAction(); this function is the main sequence where you do your command
 
 ## function and fixes coming
 
-- a function that allow to edit a task identified by his id
-- editing a function delete task, will be possible to delete his task with id instead of an index
+- nothing is coming for the moment
 
 
 ## How To use
