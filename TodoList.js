@@ -24,8 +24,9 @@ function saveTasks() {
 }
 //fonction d'ajout de tache à la liste
 function addTask(title) {
+  const lastTaskId = tasks[tasks.length -1].id;
   const newTask = {
-    id: tasks.length + 1,
+    id: lastTaskId + 1,
     title: title,
     isDone: false
   };
@@ -36,13 +37,13 @@ function addTask(title) {
 
 
 //fonction qui permet de lister les taches existantes
-function listTasks() { // pour chaque "taches" dans le fichier json
+function listTasks() { 
   if(tasks.length === 0){
     console.log('Liste des tâches vide!');
   }else{
   console.log('Liste des tâches :');
-  tasks.forEach(task => {
-    console.log(`${task.id}. [${task.isDone ? 'X' : ' '}] ${task.title}`);// il ecris le numéro de la taches, puis si elle est coché ou non
+  tasks.forEach(task => {// pour chaque "taches" dans le fichier json
+    console.log(`${task.id}. [${task.isDone ? 'X' : ' '}] ${task.title}`);// il ecris l'id de la taches, puis si elle est coché ou non
   });                                                                     // puis affiche le nom de la taches
 }}
 
@@ -60,7 +61,7 @@ function deleteTask(taskId) {
 
 // Fonction pour modifier une tâche existante
 function editTask(taskId, newTitle) {
-    const taskIndex = tasks.findIndex(task => task.id === taskIndex); // Renvoie l'index du premier élément du tableau  dans le cas présent on récupe l'id dans le json.
+    const taskIndex = tasks.findIndex(task => task.id === taskId); // Renvoie l'index du premier élément du tableau  dans le cas présent on récupe l'id dans le json.
     if (taskIndex !== -1) { // si il y a présence d'un id
     tasks[taskIndex].title = newTitle; // Met à jour le titre de la tâche
     saveTasks();
